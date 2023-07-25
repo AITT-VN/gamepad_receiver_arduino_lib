@@ -100,6 +100,16 @@ void Gamepad_Receiver::update() {
       misc_buttons = _read16Bit(i2cAddr);  
         
     } else {
+      isConnected = 0;
+      dpad = 0;
+      aLx = 0;
+      aLy = 0;
+      aRx = 0;
+      aRy = 0;
+      al2 = 0;
+      ar2 = 0;
+      buttons = 0;
+      misc_buttons = 0;
     }    
     //decode Buttons PS4
     dpad_left = (dpad >> 3) & 1;
