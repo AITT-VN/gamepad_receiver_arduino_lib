@@ -40,6 +40,76 @@ uint8_t Gamepad_Receiver::setLedColor(uint8_t red, uint8_t green, uint8_t blue){
     return 1;
 }
 
+uint32_t Gamepad_Receiver::readJoystick(uint8_t index_joystick = 0) {
+  axis_x = 0;
+  axis_y = 0;
+  dir = 0;
+  if (index_joystick == 0) {
+    if (aLx < 0){
+      axis_x = round(map(aLx, -512, 0, -100, 0));
+    }else {
+      axis_x = round(map(aLx, 0, 512, 0, 100));
+    }
+
+    if (aLy < 0){
+      axis_y = round(map(aLy, 0, 512, 0, 100));
+    }else {
+      axis_y = round(map(aLy, -512, 0, 100, 0));
+    }
+  }else {    
+    if (aRx < 0){
+      axis_x = round(map(aRx, -512, 0, 100, 0));
+    }else {
+      axis_x = round(map(aRx, 0, 512, 0, -100));
+    }
+
+    if (aRy < 0){
+      axis_y = round(map(aRy, -512, 0, -100, 0));
+    }else {
+      axis_y = round(map(aRy, 0, 512, 0, 100));
+    }
+  }
+  j_distance = sqrt((axis_x * axis_x) + (axis_y * axis_y));
+  angle = int((atan2(axis_y, axis_x) - atan2(0, 100)) * 180 / 3.14);
+  
+  if (j_distance < 15) {
+    j_distance = 0;
+    angle = -1;
+  }
+  else if (j_distance > 100) {
+    j_distance = 100;
+  }
+
+  if (angle < 0) {
+    angle += 360;
+  }
+  if (0 <= angle < 22.5 || angle >= 337.5) {
+    dir = 1;
+  }            
+  else if (22.5 <= angle && angle < 67.5) {
+    dir = 2;
+  }
+  else if (67.5 <= angle && angle < 112.5) {
+    dir = 3;
+  }
+  else if (112.5 <= angle && angle < 157.5) {
+    dir = 4;
+  }
+  else if (157.5 <= angle && angle < 202.5) {
+    dir = 5;
+  }
+  else if (202.5 <= angle && angle < 247.5) {
+    dir = 6;
+  }
+  else if (247.5 <= angle && angle < 292.5) {
+    dir = 7;
+  }
+  else if (292.5 <= angle && angle < 337.5) {
+    dir = 8;
+  }
+  return dir; 
+}
+
 uint32_t _read32Bit (uint8_t i2cAddr) {
     uint8_t byteCount = 4;
     //Wire.beginTransmission(i2cAddr);

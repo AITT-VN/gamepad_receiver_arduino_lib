@@ -47,9 +47,15 @@ public:
   uint8_t m1;
   uint8_t m2;
   uint8_t sys;
+  int8_t axis_x;
+  int8_t axis_y;
+  uint8_t j_distance;
+  int16_t angle;
+  uint8_t dir; 
   void begin();
   uint8_t setLedColor(uint8_t red, uint8_t green, uint8_t blue);
   void setPlayerLed(uint8_t led);
+  uint32_t readJoystick(uint8_t index_joystick);
   void update();
 
 
