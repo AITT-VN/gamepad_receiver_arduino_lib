@@ -21,7 +21,7 @@ void Gamepad_Receiver::begin(){
 
 void Gamepad_Receiver::setPlayerLed(uint8_t led){
     if (led < 0 || led > 255) {
-        return 0;
+        led = 0;
     }
     I2C_16Bit_writeToModule(i2cAddr, led);
 
