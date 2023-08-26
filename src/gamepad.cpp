@@ -121,11 +121,7 @@ uint32_t _read32Bit (uint8_t i2cAddr) {
       uint8_t thirdByte = Wire.read();
       uint8_t fourthByte = Wire.read();
       int32_t raw = (firstByte << 24) + (secondByte << 16) + (thirdByte << 8) + fourthByte;
-      //Serial.println(firstByte);
-      //Serial.println(secondByte);
-      //Serial.println(thirdByte);
-      //Serial.println(fourthByte);
-      //return (fourthByte << 24) + (thirdByte << 16) + (secondByte << 8) + firstByte;
+      
       if (raw & (1UL << 31))  { // sign bit is set
           Serial.print("Negative: ");
           Serial.print(raw);
@@ -140,9 +136,6 @@ uint32_t _read32Bit (uint8_t i2cAddr) {
 
 uint16_t _read16Bit (uint8_t i2cAddr) {
     uint8_t byteCount = 2;
-    //Wire.beginTransmission(i2cAddr);
-    //Wire.endTransmission();
-    //Wire.requestFrom(i2cAddr, byteCount);
     if (Wire.available()) {
       uint8_t firstByte = Wire.read();
       uint8_t secondByte = Wire.read();
